@@ -4,7 +4,7 @@ import com.example.bmicalculator.bmiCalculator.bmiResult.BmiResultActor
 import com.example.bmicalculator.bmiCalculator.button.BmiCalButtonActor
 import com.example.bmicalculator.bmiCalculator.input.BmiHeightInputActor
 import com.example.bmicalculator.bmiCalculator.input.BmiWeightInputActor
-import com.example.bmicalculator.bmiCalculator.model.BmiPageUiState
+import com.example.bmicalculator.bmiCalculator.model.BmiPageContentUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -23,7 +23,7 @@ class BmiCalculatorPageActorImpl(
         resultActor.uiState,
         buttonActor.uiState,
     ) { heightUiState, weightUiState, resultUiState, buttonUiState ->
-        BmiPageUiState(
+        BmiPageContentUiState(
             heightUiState,
             weightUiState,
             resultUiState,

@@ -42,7 +42,12 @@ class NavigationMenuActorTest : BaseKmpTest() {
                         text = NavigationMenuOption.PoundBmiCalculator.displayText,
                         enabled = true,
                         onClick = mockOnClick,
-                    )
+                    ),
+                    AppFlatButtonUiState(
+                        text = NavigationMenuOption.AbTestingBmiCalculator.displayText,
+                        enabled = true,
+                        onClick = mockOnClick,
+                    ),
                 )
             ),
             actual = actor.uiState.value.toTest(),
@@ -61,6 +66,12 @@ class NavigationMenuActorTest : BaseKmpTest() {
     fun test_click_result_WHEN_click_on_index_1() = testOnClick(
         buttonIndex = 1,
         NavigationMenuOption.PoundBmiCalculator,
+    )
+
+    @Test
+    fun test_click_result_WHEN_click_on_index_2() = testOnClick(
+        buttonIndex = 2,
+        NavigationMenuOption.AbTestingBmiCalculator,
     )
 
     private fun testOnClick(

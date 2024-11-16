@@ -1,5 +1,6 @@
 package com.example.bmicalculator.android
 
+import com.example.bmicalculator.android.bmiCalculator.abTesting.BmiCalculatorAbTestingViewModel
 import com.example.bmicalculator.android.navMenu.NavigationMenuViewModel
 import com.example.bmicalculator.android.bmiCalculator.kg.BmiCalculatorKgViewModel
 import com.example.bmicalculator.android.bmiCalculator.pound.BmiCalculatorPoundViewModel
@@ -14,6 +15,7 @@ class AndroidBmiCalculatorModule : KotlinDiModule {
             viewModel { NavigationMenuViewModel() }
             viewModel { BmiCalculatorKgViewModel(get()) }
             viewModel { BmiCalculatorPoundViewModel(get()) }
+            viewModel { BmiCalculatorAbTestingViewModel(get(), get()) }
         }
     )
 }

@@ -5,10 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.bmicalculator.android.bmiCalculator.abTesting.BmiCalculatorAbTestingViewModel
 import com.example.bmicalculator.android.bmiCalculator.kg.BmiCalculatorKgViewModel
 import com.example.bmicalculator.android.bmiCalculator.page.BmiCalculatorPage
 import com.example.bmicalculator.android.navMenu.NavigationMenuPage
@@ -30,10 +32,20 @@ class MainActivity : ComponentActivity() {
                     composable(NavigationMenuOption.PoundBmiCalculator.navPath) {
                         BmiCalculatorInPound()
                     }
+                    composable(NavigationMenuOption.AbTestingBmiCalculator.navPath){
+                        BmiCalculatorAbTesting()
+                    }
                 }
             }
         }
     }
+}
+
+@Composable
+fun BmiCalculatorAbTesting() {
+    val viewModel = koinViewModel<BmiCalculatorAbTestingViewModel>()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    uiState?.let { BmiCalculatorPage(it) }
 }
 
 @Composable
