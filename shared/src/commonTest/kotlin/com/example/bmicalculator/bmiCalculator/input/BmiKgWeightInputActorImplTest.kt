@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.merge
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BmiWeightInputActorImplTest : BaseKmpTest() {
+class BmiKgWeightInputActorImplTest : BaseKmpTest() {
     private val mockOnInputChange = { _: String -> }
     override fun initPlugins() = listOf(TestDispatcherPlugin())
-    private fun createActor(scope: CoroutineScope) = BmiWeightInputActorImpl(scope)
+    private fun createActor(scope: CoroutineScope) = BmiKgWeightInputActorImpl(scope)
 
     @Test
     fun test_uiState_AND_weightInKg_WHEN_input_is_negative_num() = testUiStateAndWeight(

@@ -1,6 +1,8 @@
 package com.example.bmicalculator.bmiCalculator.input
 
 import com.example.bmicalculator.bmiCalculator.input.model.BmiInputUiState
+import com.ionspin.kotlin.bignum.decimal.DecimalMode
+import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.decimal.toBigDecimal
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,14 +11,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class BmiWeightInputActorImpl(
-    private val scope: CoroutineScope
+class BmiPoundWeightInputActorImpl(
+    private val scope: CoroutineScope,
 ) : BmiWeightInputActor {
     private val weightInputFlow = MutableStateFlow("")
     override val weightInKg = weightInputFlow.map { input ->
         input.toDoubleOrNull()
             ?.takeIf { it >= 0.0 }
             ?.toBigDecimal()
+            ?.divide(
+                "2.2".toBigDecimal(),
+                decimalMode = DecimalMode(
+                    10,
+                    roundingMode = RoundingMode.ROUND_HALF_FLOOR,
+                    scale = 2
+                )
+            )
     }
         .stateIn(scope, SharingStarted.WhileSubscribed(), null)
 
@@ -37,8 +47,8 @@ class BmiWeightInputActorImpl(
 
     private fun createUiState(inputText: String, errorText: String = "") = BmiInputUiState(
         inputText = inputText,
-        unitText = "kg",
-        placeholder = "Weight in kg",
+        unitText = "lb",
+        placeholder = "Weight in lb",
         onInputChanged = ::updateInput,
         errorText = errorText
     )

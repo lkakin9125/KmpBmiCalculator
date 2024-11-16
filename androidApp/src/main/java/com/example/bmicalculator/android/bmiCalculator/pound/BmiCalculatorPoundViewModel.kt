@@ -1,23 +1,23 @@
-package com.example.bmicalculator.android.bmiCalculator
+package com.example.bmicalculator.android.bmiCalculator.pound
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bmicalculator.bmiCalculator.bmiResult.BmiResultActorImpl
 import com.example.bmicalculator.bmiCalculator.button.BmiCalButtonActorImpl
 import com.example.bmicalculator.bmiCalculator.input.BmiHeightInputActorImpl
-import com.example.bmicalculator.bmiCalculator.input.BmiWeightInputActorImpl
+import com.example.bmicalculator.bmiCalculator.input.BmiPoundWeightInputActorImpl
 import com.example.bmicalculator.bmiCalculator.model.BmiPageUiState
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
-class BmiCalculatorViewModel : ViewModel() {
+class BmiCalculatorPoundViewModel : ViewModel() {
     private val heightActor by lazy { BmiHeightInputActorImpl(viewModelScope) }
-    private val weightActor by lazy { BmiWeightInputActorImpl(viewModelScope) }
+    private val weightActor by lazy { BmiPoundWeightInputActorImpl(viewModelScope) }
     private val buttonActor by lazy { BmiCalButtonActorImpl(viewModelScope, heightActor, weightActor) }
     private val resultCardActor by lazy { BmiResultActorImpl(viewModelScope, heightActor, weightActor, buttonActor) }
 
-     val uiState = combine(
+    val uiState = combine(
         heightActor.uiState,
         weightActor.uiState,
         resultCardActor.uiState,
