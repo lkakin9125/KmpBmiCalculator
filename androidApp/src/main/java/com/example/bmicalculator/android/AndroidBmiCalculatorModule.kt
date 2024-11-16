@@ -12,8 +12,8 @@ class AndroidBmiCalculatorModule : KotlinDiModule {
     override val koinModule: Collection<Module> = listOf(
         module {
             viewModel { NavigationMenuViewModel() }
-            viewModel { BmiCalculatorKgViewModel() }
-            viewModel { BmiCalculatorPoundViewModel() }
+            viewModel { BmiCalculatorKgViewModel(get()) }
+            viewModel { BmiCalculatorPoundViewModel(get()) }
         }
     )
 }

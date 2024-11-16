@@ -1,6 +1,7 @@
 package com.example.bmicalculator.android
 
 import android.app.Application
+import com.example.bmicalculator.bmiCalculator.KmpBmiCalculatorModule
 import com.example.bmicalculator.common.di.ModuleManager
 import org.koin.android.ext.koin.androidContext
 
@@ -8,6 +9,7 @@ class BmiCalculatorApplication : Application() {
     private val moduleManager by lazy {
         ModuleManager(
             modules = listOf(
+                KmpBmiCalculatorModule(),
                 AndroidBmiCalculatorModule()
             ),
             customStartDi = {
