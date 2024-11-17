@@ -11,6 +11,7 @@ import com.example.bmicalculator.bmiCalculator.model.BmiPageLoadingUiState
 import com.example.bmicalculator.bmiCalculator.query.BmiInputUnitQueryActorImpl
 import com.example.bmicalculator.bmiCalculator.repository.BmiRepository
 import com.example.bmicalculator.common.model.Lce
+import com.example.bmicalculator.navMenu.model.NavigationMenuOption
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -32,6 +33,7 @@ class BmiCalculatorAbTestingViewModel(
 
     private val pageActor = actorFactory.createPageActor(
         scope = viewModelScope,
+        title = NavigationMenuOption.AbTestingBmiCalculator.displayText,
         weightActor = dynamicWeightActor
     )
 

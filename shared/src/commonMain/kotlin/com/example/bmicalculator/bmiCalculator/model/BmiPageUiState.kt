@@ -9,6 +9,7 @@ sealed interface BmiPageUiState
 data object BmiPageLoadingUiState : BmiPageUiState
 
 data class BmiPageContentUiState(
+    val title:String,
     val heightInputUiState: BmiInputUiState,
     val weightInputUiState: BmiInputUiState,
     val resultUiState: BmiResultUiState?,

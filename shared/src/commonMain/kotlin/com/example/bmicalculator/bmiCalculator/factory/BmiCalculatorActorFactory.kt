@@ -15,12 +15,14 @@ import kotlinx.coroutines.CoroutineScope
 class BmiCalculatorActorFactory {
     fun createPageActor(
         scope: CoroutineScope,
+        title:String,
         heightActor: BmiHeightInputActor = BmiHeightInputActorImpl(scope),
         weightActor: BmiWeightInputActor = BmiKgWeightInputActorImpl(scope),
         buttonActor: BmiCalButtonActor = BmiCalButtonActorImpl(scope, heightActor, weightActor),
         resultActor: BmiResultActor = BmiResultActorImpl(scope, heightActor, weightActor, buttonActor),
     ): BmiCalculatorPageActor = BmiCalculatorPageActorImpl(
         scope = scope,
+        title= title,
         heightActor = heightActor,
         weightActor = weightActor,
         buttonActor = buttonActor,

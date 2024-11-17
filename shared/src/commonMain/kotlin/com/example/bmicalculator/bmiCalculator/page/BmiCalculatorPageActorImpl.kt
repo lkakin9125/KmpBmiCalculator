@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 
 class BmiCalculatorPageActorImpl(
     val scope: CoroutineScope,
+    val title: String,
     val heightActor: BmiHeightInputActor,
     val weightActor: BmiWeightInputActor,
     val buttonActor: BmiCalButtonActor,
@@ -24,10 +25,11 @@ class BmiCalculatorPageActorImpl(
         buttonActor.uiState,
     ) { heightUiState, weightUiState, resultUiState, buttonUiState ->
         BmiPageContentUiState(
-            heightUiState,
-            weightUiState,
-            resultUiState,
-            buttonUiState
+            title = title,
+            heightInputUiState = heightUiState,
+            weightInputUiState = weightUiState,
+            resultUiState = resultUiState,
+            buttonUiState = buttonUiState
         )
     }
         .stateIn(scope, SharingStarted.WhileSubscribed(), null)

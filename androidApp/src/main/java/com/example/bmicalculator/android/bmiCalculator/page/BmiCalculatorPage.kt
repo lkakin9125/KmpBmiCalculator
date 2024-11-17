@@ -61,7 +61,7 @@ fun BmiCalculatorContentPage(uiState: BmiPageContentUiState) {
             .fillMaxSize()
     ) {
         TopAppBar(
-            title = { Text("Bmi Calculator") },
+            title = { Text(uiState.title) },
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = LocalBmiColor.current.background,
                 titleContentColor = LocalBmiColor.current.contentNormal,
@@ -94,6 +94,7 @@ private fun PreviewBmiCalculatorPageWithoutResult() {
     MyApplicationTheme {
         BmiCalculatorPage(
             BmiPageContentUiState(
+                title = "BmiCalculator",
                 heightInputUiState = BmiInputUiState(
                     inputText = "200",
                     unitText = "cm",
@@ -125,6 +126,7 @@ private fun PreviewBmiCalculatorPageWithResult() {
     MyApplicationTheme {
         BmiCalculatorPage(
             BmiPageContentUiState(
+                title = "BmiCalculator",
                 heightInputUiState = BmiInputUiState(
                     inputText = "200",
                     unitText = "cm",
@@ -160,6 +162,7 @@ private fun PreviewBmiCalculatorPageWhenInit() {
     MyApplicationTheme {
         BmiCalculatorPage(
             BmiPageContentUiState(
+                title = "BmiCalculator",
                 heightInputUiState = BmiInputUiState(
                     inputText = "",
                     unitText = "cm",
