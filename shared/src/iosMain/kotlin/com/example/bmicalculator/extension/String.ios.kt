@@ -1,8 +1,11 @@
 package com.example.bmicalculator.extension
 
-import platform.foundation.NSString
-import platform.foundation.stringWithFormat
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.cstr
+import platform.Foundation.NSString
+import platform.Foundation.stringWithFormat
 
+@OptIn(ExperimentalForeignApi::class)
 actual fun String.kmpFormat(vararg args: String): String {
     @Suppress("MagicNumber")
     return when (args.size) {
