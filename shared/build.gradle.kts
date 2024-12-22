@@ -28,7 +28,35 @@ kotlin {
         }
     }
 
+    js(IR){
+        browser {
+            testTask{
+                useKarma {
+                    useChromeHeadless()
+                    useChrome()
+                }
+            }
+        }
+        nodejs{
+            testTask{
+                useMocha {  }
+            }
+        }
+        binaries.library()
+        useCommonJs()
+        generateTypeScriptDefinitions()
+    }
+
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("kotlin.js.ExperimentalJsExport")
+            }
+        }
+
+        jsMain.dependencies {
+            implementation(kotlin("stdlib-js"))
+        }
         commonMain.dependencies {
             //put your multiplatform dependencies here
             api(libs.kotlinx.coroutine)

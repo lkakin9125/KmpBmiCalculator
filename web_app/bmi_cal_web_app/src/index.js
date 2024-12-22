@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import share from "BmiCalculator-shared"
+import { ThemeProvider } from '@emotion/react';
+import theme from './theme/theme';
+import AppRouter from './routing/AppRouter';
 
+let kmpStarter = new share.com.example.bmicalculator.KmpJsStarter()
+kmpStarter.start()
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <AppRouter />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

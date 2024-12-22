@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.combine
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+@JsExport
 class BmiCalculatorAbTestingDi : KoinComponent {
     private val bmiCalActorFactory: BmiCalculatorActorFactory by inject()
     private val scope: CoroutineScope by inject()
@@ -41,14 +42,14 @@ class BmiCalculatorAbTestingDi : KoinComponent {
     }
 
     fun subscribe(onNext: (BmiPageUiState?) -> Unit) = combine(
-        queryActor.inputUnitLce,
-        actor.uiState,
-    ) { lce, uiStateVal ->
-        when (lce !is Lce.Content) {
-            true -> BmiPageLoadingUiState
-            false -> uiStateVal ?: BmiPageLoadingUiState
+            queryActor.inputUnitLce,
+            actor.uiState,
+        ) { lce, uiStateVal ->
+            when (lce !is Lce.Content) {
+                true -> BmiPageLoadingUiState
+                false -> uiStateVal ?: BmiPageLoadingUiState
+            }
         }
-    }
         .toKmpStream(scope)
         .subscribe(onNext)
 }

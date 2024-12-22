@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class KmpStream<T>(
-    val scope: CoroutineScope,
-    val flow: Flow<T>,
+    private val scope: CoroutineScope,
+    private val flow: Flow<T>,
 ) {
     fun subscribe(onNext: (T) -> Unit): () -> Unit {
         val job = flow.onEach {
