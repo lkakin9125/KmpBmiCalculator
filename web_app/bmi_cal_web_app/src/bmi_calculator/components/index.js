@@ -1,0 +1,6 @@
+import "./BmiButton"
+import "./BmiButton"
+import "./BmiResult"
+import "./BmiInput"
+import "./BmiPageContent"
+import "./BmiPageLoading"
