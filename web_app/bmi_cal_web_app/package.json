@@ -20,7 +20,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "fetchkmp": "cd ../../ && gradlew jsBrowserDevelopmentLibraryDistribution && cd ./web_app/bmi_cal_web_app && npm uninstall BmiCalculator-shared && npm install ../../shared/build/dist/js/developmentLibrary",
+    "win-fetch-kmp": "cd ../../ && gradlew jsBrowserDevelopmentLibraryDistribution && cd ./web_app/bmi_cal_web_app && npm uninstall BmiCalculator-shared && npm install ../../shared/build/dist/js/developmentLibrary",
+    "mac-fetch-kmp": "cd ../../ && ./gradlew jsBrowserDevelopmentLibraryDistribution && cd ./web_app/bmi_cal_web_app && npm uninstall BmiCalculator-shared && npm install ../../shared/build/dist/js/developmentLibrary",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
