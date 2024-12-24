@@ -5,6 +5,7 @@ import com.example.bmicalculator.testCore.base.KmpTestPlugin
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -22,9 +23,8 @@ class TestDispatcherPlugin : KmpTestPlugin {
     }
 }
 
-fun BaseKmpTest.runTestWithPlugin(testBody: suspend TestScope.() -> Unit) {
+fun BaseKmpTest.runTestWithPlugin(testBody: suspend TestScope.() -> Unit): TestResult {
     val plugin = this.plugins.find { it is TestDispatcherPlugin } as? TestDispatcherPlugin
         ?: throw IllegalStateException("TestDispatcherPlugin not included")
-    runTest { }
-    runTest(plugin.testDispatcher, testBody = testBody)
+    return runTest(plugin.testDispatcher, testBody = testBody)
 }
