@@ -23,7 +23,7 @@ class BmiResultActorImpl(
     private val bmiCalButtonActor: BmiCalButtonActor,
 ) : BmiResultActor {
 
-    private val sortedBmiCategory = BmiCategory.entries.sortedByDescending { it.minThreshold }
+    private val sortedBmiCategory = BmiCategory.values().sortedByDescending { it.minThreshold }
 
     private val bmi = bmiCalButtonActor.buttonClickEvent.mapLatest {
         combine(

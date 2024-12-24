@@ -12,7 +12,7 @@ class NavigationMenuActorImpl(
 ): NavigationMenuActor {
     override val uiState = MutableStateFlow(
         NavigationMenuPageUiState(
-            NavigationMenuOption.entries.map {
+            NavigationMenuOption.values().map {
                 AppFlatButtonUiState(it.displayText, true) { onMenuClickEvent.tryEmit(it) }
             }
         ))
