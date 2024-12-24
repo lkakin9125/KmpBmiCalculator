@@ -19,8 +19,8 @@ class BmiCalculatorKgDi : KoinComponent {
             title = NavigationMenuOption.KgBmiCalculator.displayText,
         )
     }
-
-    fun subscribe(onNext: (BmiPageUiState?) -> Unit) = actor.uiState
+    val uiStateStream = actor.uiState
         .toKmpStream(scope)
-        .subscribe(onNext)
+
+    fun subscribe(onNext: (BmiPageUiState?) -> Unit) = uiStateStream.subscribe(onNext)
 }

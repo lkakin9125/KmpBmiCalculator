@@ -22,7 +22,9 @@ class BmiCalculatorPoundDi : KoinComponent {
         )
     }
 
-    fun subscribe(onNext: (BmiPageUiState?) -> Unit) = actor.uiState
+    val uiStateStream = actor.uiState
         .toKmpStream(scope)
+
+    fun subscribe(onNext: (BmiPageUiState?) -> Unit) = uiStateStream
         .subscribe(onNext)
 }

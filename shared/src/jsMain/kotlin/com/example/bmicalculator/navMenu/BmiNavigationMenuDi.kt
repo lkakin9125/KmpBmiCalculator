@@ -14,11 +14,15 @@ class BmiNavigationMenuDi : KoinComponent {
     private val uiState = actor.uiState
     private val onClickEvent = actor.onMenuClickEvent
 
-    fun subscribeUiState(onNext: (NavigationMenuPageUiState?) -> Unit) = uiState
+    val uiStateStream = uiState
         .toKmpStream(scope)
+
+    fun subscribeUiState(onNext: (NavigationMenuPageUiState?) -> Unit) = uiStateStream
         .subscribe(onNext)
 
-    fun subscribeOnClickEvent(onNext: (NavigationMenuOption) -> Unit) = onClickEvent
+    val onClickEventStream = onClickEvent
         .toKmpStream(scope)
+
+    fun subscribeOnClickEvent(onNext: (NavigationMenuOption) -> Unit) = onClickEventStream
         .subscribe(onNext)
 }

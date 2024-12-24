@@ -14,6 +14,9 @@ import com.example.bmicalculator.testCore.base.KmpTestPlugin
 import com.example.bmicalculator.testCore.coroutine.TestDispatcherPlugin
 import com.example.bmicalculator.testCore.coroutine.runTestWithPlugin
 import com.example.bmicalculator.testCore.mocktComponent.MockComponentResetPlugin
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,30 +26,27 @@ class HybridActorTest
     private val mockOnClick = {}
     private val mockOnTextChange = { _: String -> }
 
-    private val mockKgActor by lazy { MockBmiCalculatorPageActor(genMockUiState("kg")) }
-    private val mockPoundActor by lazy { MockBmiCalculatorPageActor(genMockUiState("lb")) }
-    private val mockAbTestingActor by lazy { MockBmiCalculatorPageActor(BmiPageLoadingUiState) }
-    private val mockNavMenuActor by lazy { MockNavigationMenuActor(genNavMenuUiState()) }
+    private val mockKgUiState by lazy { MutableStateFlow(genMockUiState("kg")) }
+    private val mockPoundUiState by lazy { MutableStateFlow(genMockUiState("lb")) }
+    private val mockAbTestingUiState by lazy { MutableStateFlow(BmiPageLoadingUiState) }
+    private val mockMenuUiState by lazy { MutableStateFlow(genNavMenuUiState())}
+    private val mockMenuEvent by lazy { MutableSharedFlow<NavigationMenuOption>(replay = 1) }
 
-        val testDispatcherPlugin = TestDispatcherPlugin()
     override fun initPlugins(): List<KmpTestPlugin> {
         return listOf(
-            testDispatcherPlugin,
-            MockComponentResetPlugin(
-                listOf(
-                    mockKgActor,
-                    mockPoundActor,
-                    mockAbTestingActor,
-                )
-            )
+            TestDispatcherPlugin()
         )
     }
 
-    private fun createActor() = HybridActor(
-        actorMap = mapOf(
-            NavigationMenuOption.AbTestingBmiCalculator to mockAbTestingActor,
+    private fun createActor(scope: CoroutineScope) = HybridActor(
+        scope = scope,
+        calculatorUiStateMap = mapOf(
+            NavigationMenuOption.KgBmiCalculator to mockKgUiState,
+            NavigationMenuOption.PoundBmiCalculator to mockPoundUiState,
+            NavigationMenuOption.AbTestingBmiCalculator to mockAbTestingUiState,
         ),
-        menuActor = mockNavMenuActor
+        menuUiState = mockMenuUiState,
+        menuClickEvent = mockMenuEvent
     )
 
     @Test
@@ -63,7 +63,7 @@ class HybridActorTest
         selectedNavOption = NavigationMenuOption.KgBmiCalculator,
         expectedUiState = HybridUiState(
             navigationMenuPageUiState = genNavMenuUiState(),
-            bmiCalculatorUiState = mockKgActor.resetUiState,
+            bmiCalculatorUiState = mockKgUiState.value,
         )
     )
 
@@ -72,7 +72,7 @@ class HybridActorTest
         selectedNavOption = NavigationMenuOption.PoundBmiCalculator,
         expectedUiState = HybridUiState(
             navigationMenuPageUiState = genNavMenuUiState(),
-            bmiCalculatorUiState = mockPoundActor.resetUiState,
+            bmiCalculatorUiState = mockPoundUiState.value,
         )
     )
 
@@ -81,7 +81,7 @@ class HybridActorTest
         selectedNavOption = NavigationMenuOption.AbTestingBmiCalculator,
         expectedUiState = HybridUiState(
             navigationMenuPageUiState = genNavMenuUiState(),
-            bmiCalculatorUiState = mockAbTestingActor.resetUiState,
+            bmiCalculatorUiState = mockAbTestingUiState.value,
         )
     )
 
@@ -89,13 +89,10 @@ class HybridActorTest
         selectedNavOption: NavigationMenuOption?,
         expectedUiState: HybridUiState?,
     ) = runTestWithPlugin {
-        throw Throwable()
-        val actor = createActor()
+        val actor = createActor(backgroundScope)
         val job = actor.uiState.launchIn(backgroundScope)
 
-        if (selectedNavOption != null) mockNavMenuActor.onMenuClickEvent.tryEmit(selectedNavOption)
-        println("hello myDebug, expectedUiState: $expectedUiState, actor.uiState.value: ${actor.uiState.value}")
-
+        if (selectedNavOption != null) mockMenuEvent.tryEmit(selectedNavOption)
         assertEquals(
             expected = expectedUiState,
             actual = actor.uiState.value

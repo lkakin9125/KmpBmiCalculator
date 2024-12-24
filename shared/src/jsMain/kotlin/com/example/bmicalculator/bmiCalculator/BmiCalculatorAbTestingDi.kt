@@ -40,16 +40,17 @@ class BmiCalculatorAbTestingDi : KoinComponent {
             weightActor = dynamicWeightActor
         )
     }
-
-    fun subscribe(onNext: (BmiPageUiState?) -> Unit) = combine(
-            queryActor.inputUnitLce,
-            actor.uiState,
-        ) { lce, uiStateVal ->
-            when (lce !is Lce.Content) {
-                true -> BmiPageLoadingUiState
-                false -> uiStateVal ?: BmiPageLoadingUiState
-            }
+    val uiStateStream = combine(
+        queryActor.inputUnitLce,
+        actor.uiState,
+    ) { lce, uiStateVal ->
+        when (lce !is Lce.Content) {
+            true -> BmiPageLoadingUiState
+            false -> uiStateVal ?: BmiPageLoadingUiState
         }
+    }
         .toKmpStream(scope)
+
+    fun subscribe(onNext: (BmiPageUiState?) -> Unit) = uiStateStream
         .subscribe(onNext)
 }
