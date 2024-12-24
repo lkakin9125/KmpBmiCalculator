@@ -14,14 +14,14 @@ import kotlinx.coroutines.flow.stateIn
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class NavigationMenuActorTest : BaseKmpTest() {
+class NavigationMenuActorImplTest : BaseKmpTest() {
     private val mockOnClick = {}
 
     override fun initPlugins() = listOf(
         TestDispatcherPlugin(),
     )
 
-    private fun createActor(scope: CoroutineScope) = NavigationMenuActor(
+    private fun createActor(scope: CoroutineScope) = NavigationMenuActorImpl(
         scope = scope,
     )
 

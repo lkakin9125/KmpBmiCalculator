@@ -1,20 +1,11 @@
 package com.example.bmicalculator.navMenu
 
-import com.example.bmicalculator.common.ui.model.AppFlatButtonUiState
 import com.example.bmicalculator.navMenu.model.NavigationMenuOption
 import com.example.bmicalculator.navMenu.model.NavigationMenuPageUiState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 
-class NavigationMenuActor(
-    val scope: CoroutineScope,
-) {
-    val uiState = MutableStateFlow(
-        NavigationMenuPageUiState(
-            NavigationMenuOption.entries.map {
-                AppFlatButtonUiState(it.displayText, true) { onMenuClickEvent.tryEmit(it) }
-            }
-        ))
-    val onMenuClickEvent = MutableSharedFlow<NavigationMenuOption>(extraBufferCapacity = 1)
+interface NavigationMenuActor {
+    val uiState: StateFlow<NavigationMenuPageUiState>
+    val onMenuClickEvent: SharedFlow<NavigationMenuOption>
 }

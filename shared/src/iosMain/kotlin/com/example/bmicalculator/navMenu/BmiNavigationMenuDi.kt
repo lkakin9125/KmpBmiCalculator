@@ -9,7 +9,7 @@ import org.koin.core.component.inject
 
 class BmiNavigationMenuDi : KoinComponent {
     private val scope: CoroutineScope by inject()
-    private val actor = NavigationMenuActor(scope)
+    private val actor = NavigationMenuActorImpl(scope)
     private val uiState = actor.uiState
     private val onClickEvent = actor.onMenuClickEvent
 
